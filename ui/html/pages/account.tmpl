@@ -1,0 +1,58 @@
+{{define "title"}}Benutzerkonto{{end}}
+
+{{define "main"}}
+<div data-theme="light">
+    <section class="is-max-desktop">
+        <div class="container is-centered">
+            <div class="columns">
+                <div class="column is-half is-offset-one-quarter">
+                    <div class="card m-5">
+                        <div class="card-header-title has-background-grey-lighter">
+                            <h2>Benutzerkonto</h2>
+                        </div>
+                        <div class="card-content">
+                            {{with .User}}
+                            <table class="table">
+                                <tr>
+                                    <th>Nachname</th>
+                                    <td>{{.LastName}}</td>
+                                </tr>
+                                <tr>
+                                    <th>Vorname</th>
+                                    <td>{{.FirstName}}</td>
+                                </tr>
+                                <tr>
+                                    <th>Email</th>
+                                    <td>{{.Email}}</td>
+                                </tr>
+                                <tr>
+                                    <th>Job Titel</th>
+                                    <td>{{.JobTitle}}</td>
+                                </tr>
+                                <tr>
+                                    <th>Zimmer</th>
+                                    <td>{{.Room}}</td>
+                                </tr>
+                                <tr>
+                                    <th>Angelegt am</th>
+                                    <td>{{humanDate .Created}}</td>
+                                </tr>
+                                <tr>
+                                    <th>Administrator</th>
+                                    <td><input type="checkbox" {{if .Admin}} checked {{end}}></td>
+                                </tr>
+                                <tr>
+                                    <!-- Insert a link to the change password form -->
+                                    <th>Passwort</th>
+                                    <td><a href="/account/password/update">Passwort ändern</a></td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+{{end }}
+{{end}}

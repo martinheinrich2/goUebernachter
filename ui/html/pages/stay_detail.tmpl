@@ -1,0 +1,159 @@
+{{define "title"}}Aufenthalt Details{{end}}
+
+{{define "main"}}
+<div class="container is-max-desktop">
+    <div class="columns is-centered">
+        <div class="column">
+            <div class="card m-5">
+                <div class="card-header-title has-background-link">
+                    <h2 class="has-text-white">Aufenthalt</h2>
+                </div>
+
+                <div class="card-content">
+                    <div class="columns">
+                        <div class="column is-half">
+                            <table class="table">
+                                <tr>
+                                    <th>Name</th>
+                                    <td><a href="/guest/view/{{.Guest.ID}}">{{ .Guest.LastName }}, {{ .Guest.FirstName }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Geburtsdatum</th>
+                                    <td>{{humanBirthDay .Guest.BirthDate }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Geburtsort</th>
+                                    <td>{{ .Guest.BirthPlace }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Pass- /Ausweisnummer</th>
+                                    <td>{{ .Guest.IdNumber }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Nationalität</th>
+                                    <td>{{ .Guest.Nationality }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Letzter Wohnort</th>
+                                    <td>{{ .Guest.LastResidence }}</td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="column is-half">
+                            <table class="table">
+                                <tr>
+                                    <td>Einzug:</td>
+                                    <td>{{humanBirthDay .Stay.StartDate }}</td>
+                                </tr>
+                                <tr>
+                                    <td>Auszug:</td>
+                                    <td>{{humanBirthDay .Stay.EndDate }}</td>
+                                </tr>
+                                <tr>
+                                    <td>Zimmer:</td>
+                                    <td>{{ .Stay.Room }}</td>
+                                </tr>
+                                <tr>
+                                    <td>Aufenthalt Art</td>
+                                    {{if eq .Stay.TypeOfStay "UM"}}
+                                    <td>Übernachter mit Beratung</td>
+                                    {{end}}
+                                    {{if eq .Stay.TypeOfStay "UO"}}
+                                    <td>Übernachter ohne Beratung</td>
+                                    {{end}}
+                                    {{if eq .Stay.TypeOfStay "AM"}}
+                                    <td>Aufnahme mit Beratung</td>
+                                    {{end}}
+                                </tr>
+                                <tr>
+                                    <td>Sozialarbeiter:</td>
+                                    <td>{{ .SocialWorker.LastName}}, {{ .SocialWorker.FirstName }}</td>
+                                </tr>
+                                <tr>
+                                    <td>Mitarbeiter Rezeption</td>
+                                    <td>{{ .User.LastName }}, {{ .User.FirstName }}</td>
+                                </tr>
+                                <tr>
+                                    <td>Beratungstermin</td>
+                                    <td>{{humanDateTime2 .Stay.Appointment}}</td>
+                                </tr>
+                                <tr>
+                                    <td>Beratung erfolgt:</td>
+                                    <td><input type="checkbox" name="appointmentDone" {{if .Stay.AppointmentDone}} checked {{end}}></td>
+                                </tr>
+                                <tr>
+                                    <td>Profsys erfasst:</td>
+                                    <td><input type="checkbox" name="stayProcessed" {{if .Stay.StayProcessed}} checked {{end}}></td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="buttons">
+                {{if eq .AuthUser.JobTitle "Verwaltung"}}
+                <form action="/stay/processed/{{.Stay.ID}}">
+                    <button class="button is-info ml-5">Daten erfasst</button>
+                </form>
+                {{end}}
+                {{if eq .AuthUser.JobTitle "Sozialarbeit"}}
+                <form action="/stay/appointment/{{.Stay.ID}}">
+                    <button class="button is-info ml-5">Beratung erfolgt</button>
+                </form>
+                {{end}}
+                <form action="/stay/update/{{.Stay.ID}}">
+                    <button class="button is-warning ml-5" type="submit">Ändern</button>
+                </form>
+                <button class="button is-primary js-modal-trigger" data-target="modal-js-stay">
+                    Drucke Auswählen
+                </button>
+            </div>
+
+            <div id="modal-js-stay" class="modal">
+                <div class="modal-background"></div>
+                <div class="modal-card">
+                    <header class="modal-card-head">
+                        <p class="modal-card-title">Formulare auswählen</p>
+                        <button class="delete" aria-label="close"></button>
+                    </header>
+                    <form action="/stay/detail_print/{{.Stay.ID}}" method="POST">
+                    <section class="modal-card-body">
+                        <div class="field">
+                            <label for="stayform" class="checkbox">Aufnahmeformular
+                                <input type="checkbox" id="stayform" name="stayform">
+                            </label>
+                        </div>
+                        <div class="field">
+                            <label for="dataform" class="checkbox">Bewohner Stammblatt
+                                <input type="checkbox" id="dataform" name="dataform">
+                            </label>
+                        </div>
+                        <div class="field">
+                            <label for="appointmentform" class="checkbox">Beratungstermin
+                                <input type="checkbox" id="appointmentform" name="appointmentform">
+                            </label>
+                        </div>
+                        <div class="field">
+                            <label for="confirmationform" class="checkbox">Bestätigung Hilfeleistung
+                                <input type="checkbox" id="confirmationform" name="confirmationform">
+                            </label>
+                        </div>
+                        <div class="field">
+                            <label for="clearingform" class="checkbox">Formular Clearingstelle
+                                <input type="checkbox" id="clearinform" name="clearingform">
+                            </label>
+                        </div>
+                    </section>
+                    <footer class="modal-card-foot">
+                            <input type='hidden' name='csrf_token' value='{{.CSRFToken}}'>
+                            <button class="button is-primary">Formulare drucken</button>
+                        </form>
+                    </footer>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{{end}}
+
+

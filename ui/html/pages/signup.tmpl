@@ -1,0 +1,95 @@
+{{define "title"}}ÜIS - User Anlage{{end}}
+
+{{define "main"}}
+<div data-theme="light">
+    <section class="is-max-desktop">
+        <div class="container mt-3">
+            <div class="columns">
+                <div class="column is-three-fifths is-offset-one-fifth has-text-centered">
+                    <section id="signup" class="hero is-light is-large">
+                        <div class="box has-background-white-ter">
+                            <div>
+                                <h3 class="title">Account anlegen</h3>
+                                <hr class="login-hr">
+                            </div>
+
+                            <form action='/user/signup' method='POST' novalidate>
+                                <input type='hidden' name='csrf_token' value='{{.CSRFToken}}'>
+                                <div class="field">
+                                    <label for="lastname" class="label">Nachname:</label>
+                                    {{with .Form.FieldErrors.lastname}}
+                                    <label class='label has-text-danger'>{{.}}</label>
+                                    {{end}}
+                                    <input class="input is-rounded" type='text' id="lastname" name='lastname'
+                                           value='{{.Form.LastName}}'>
+                                </div>
+                                <div class="field">
+                                    <label for="firstname" class="label">Vorname:</label>
+                                    {{with .Form.FieldErrors.firstname}}
+                                    <label class='label has-text-danger'>{{.}}</label>
+                                    {{end}}
+                                    <input class="input is-rounded" type='text' id="firstname"
+                                           name='firstname'
+                                           value='{{.Form.FirstName}}'>
+                                </div>
+                                <div class="field">
+                                    <label for="email" class="label">Email:</label>
+                                    {{with .Form.FieldErrors.email}}
+                                    <label class='label has-text-danger'>{{.}}</label>
+                                    {{end}}
+                                    <input class="input is-rounded" type='email' id="email" name='email'
+                                           value='{{.Form.Email}}'>
+                                </div>
+                                <div class="field">
+                                    <label for="job" class="label">Job Titel:</label>
+                                    {{with .Form.FieldErrors.job_title}}
+                                    <label class='label has-text-danger'>{{.}}</label>
+                                    {{end}}
+                                    <div class="control">
+                                        <div class="select is-rounded">
+                                            <select name="job_title" id="job">
+                                                <option value="Sozialarbeiter">Sozialarbeiter</option>
+                                                <option value="Rezeption">Rezeption</option>
+                                                <option value="Verwaltung">Verwaltung</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div>
+                                    <label for="room" class="label">Zimmernummer:</label>
+                                    {{with .Form.FieldErrors.room}}
+                                    <label class='label has-text-danger'>{{.}}</label>
+                                    {{end}}
+                                    <input class="input is-rounded" type='text' id="room" name='room'
+                                           value="{{.Form.Room}}">
+                                </div>
+                                <div>
+                                    <label for="password" class="label">Passwort:</label>
+                                    {{with .Form.FieldErrors.password}}
+                                    <label class='label has-text-danger'>{{.}}</label>
+                                    {{end}}
+                                    <input class="input is-rounded" type='password' id="password"
+                                           name='password'>
+                                </div>
+                                <div>
+                                    <label class="label">Passwort bestätigen:</label>
+                                    {{with .Form.FieldErrors.passwordConfirmation}}
+                                    <label class="label has-text-danger">{{.}}</label>
+                                    {{end}}
+                                    <input class="input is-rounded" type='password'
+                                           name='passwordConfirmation'>
+                                </div>
+                                <div class="control my-5">
+                                    <button class="button is-block is-fullwidth is-primary is-medium is-rounded"
+                                            type='submit'>Anmelden
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </section>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+{{end}}

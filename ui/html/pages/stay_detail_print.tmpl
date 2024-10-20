@@ -1,0 +1,362 @@
+{{define "title"}}Druck - Formulare{{end}}
+
+{{define "main"}}
+<!-- Aufnahmeformular -->
+{{ if .Form.StayForm }}
+<section>
+    <div class="mx-4">
+        <h1 class="has-text-weight-bold is-size-3">Aufnahmeformular</h1>
+        <hr style="height:2px;border-width:0;color:black;background-color:black">
+    </div>
+    <div class="columns">
+        <div class="column is-half">
+            <table class="table">
+                <tr>
+                    <td>Name:</td>
+                    <td>{{ .Guest.LastName }}</td>
+                </tr>
+                <tr>
+                    <td>Vorname</td>
+                    <td>{{ .Guest.FirstName }}</td>
+                </tr>
+                <tr>
+                    <td>Geburtsdatum</td>
+                    <td>{{humanBirthDay .Guest.BirthDate }}</td>
+                </tr>
+                <tr>
+                    <td>Geburtsort</td>
+                    <td>{{ .Guest.BirthPlace }}</td>
+                </tr>
+                <tr>
+                    <td>Pass-/Ausweisnummer:</td>
+                    <td>{{ .Guest.IdNumber }}</td>
+                </tr>
+                <tr>
+                    <td>Nationalität:</td>
+                    <td>{{ .Guest.Nationality }}</td>
+                </tr>
+                <tr>
+                    <td>Letzter Wohnort:</td>
+                    <td>{{ .Guest.LastResidence }}</td>
+                </tr>
+            </table>
+        </div>
+        <div class="column is-half">
+            <table class="table is-bordered">
+                <tr>
+                    <td>Eintrittsdatum:</td>
+                    <td>{{humanBirthDay .Stay.StartDate }}</td>
+                </tr>
+                <tr>
+                    <td>Austrittsdatum:</td>
+                    <td>{{humanBirthDay .Stay.EndDate }}</td>
+                </tr>
+                <tr>
+                    <td>Zimmer:</td>
+                    <td>{{ .Stay.Room }}</td>
+                </tr>
+                <tr>
+                    <td>
+                        <label class="checkbox">
+                            <input type="checkbox">
+                            Hausordnung erhalten
+                        </label>
+                    </td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>Aufenthalt Art</td>
+                    {{if eq .Stay.TypeOfStay "UM"}}
+                    <td>Übernachter mit Beratung</td>
+                    {{end}}
+                    {{if eq .Stay.TypeOfStay "UO"}}
+                    <td>Übernachter ohne Beratung</td>
+                    {{end}}
+                    {{if eq .Stay.TypeOfStay "AM"}}
+                    <td>Aufnahme mit Beratung</td>
+                    {{end}}
+                </tr>
+                <tr>
+                    <td>Mitarbeiter Rezeption</td>
+                    <td>{{ .User.LastName }}, {{.User.FirstName }}</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <br>
+    <br>
+    <br>
+    <br>
+</section>
+{{end}}
+<!-- Bewohner Stammblatt -->
+{{ if .Form.DataForm }}
+<section>
+    <div class="mx-4">
+        <h1 class="has-text-weight-bold is-size-3">Bewohner-Stammblatt</h1>
+        <hr style="height:2px;border-width:0;color:black;background-color:black">
+    </div>
+    <div class="columns">
+        <div class="column is-half">
+            <table class="table">
+                <tr>
+                    <td>Name:</td>
+                    <td>{{ .Guest.LastName }}</td>
+                </tr>
+                <tr>
+                    <td>Vorname</td>
+                    <td>{{ .Guest.FirstName }}</td>
+                </tr>
+                <tr>
+                    <td>Geburtsdatum</td>
+                    <td>{{humanBirthDay .Guest.BirthDate }}</td>
+                </tr>
+                <tr>
+                    <td>Geburtsort</td>
+                    <td>{{ .Guest.BirthPlace }}</td>
+                </tr>
+                <tr>
+                    <td>Nationalität:</td>
+                    <td>{{ .Guest.Nationality }}</td>
+                </tr>
+                <tr>
+                    <td>Zimmer:</td>
+                    <td>{{ .Stay.Room }}</td>
+                </tr>
+            </table>
+        </div>
+        <div class="column is-half">
+            <table class="table is-bordered">
+                <tr>
+                    <td>Datum</td>
+                    <td>{{humanBirthDay .Stay.StartDate }}</td>
+                </tr>
+                <tr>
+                    <td>Mitarbeiter Rezeption</td>
+                    <td>{{ .User.LastName }}, {{ .User.FirstName }}</td>
+                </tr>
+                <tr>
+                    <td><label>
+                        Selbstversorger
+                        <input type="checkbox"> ja
+                        <input type="checkbox"> nein
+                    </label>
+                    </td>
+                    <td>
+                        Datum: ____________
+                    </td>
+                </tr>
+            </table>
+            <br>
+            Bemerkung: ___________________________________________
+        </div>
+    </div>
+    <div class="mx-3">
+        Kostenträger:
+        <br>
+        <input type="checkbox"> Übernachter &emsp; <input type="checkbox"> Stadt &emsp;
+        <input type="checkbox">Bezirk ABC &emsp;
+        <input type="checkbox"> Bezirk DEF &emsp; <input type="checkbox"> Bezirk __________________
+    </div>
+</section>
+<br>
+<br>
+<br>
+<br>
+{{end}}
+{{if and .Form.StayForm .Form.DataForm}}
+<div class="has-page-break-after"></div>
+{{end}}
+
+<!-- Beratungstermin -->
+{{ if .Form.AppointmentForm }}
+<section>
+    <div class="mx-9">
+        <hr style="height:2px;border-width:0;color:black;background-color:black;margin-left: 50px;margin-bottom: 5px">
+        <div class="columns">
+            <div class="column is-one-fifth"></div>
+            <div class="column is-one-fifth">
+                <br>
+                <img src="" alt="Logo" width="70">
+            </div>
+            <div class="column">
+                <h2>Name der Einrichtung</h2>
+                <h3>Name Zusatz</h3>
+                <h3>Strasse</h3>
+                <h3>PLZ Ort</h3>
+                <h3>Telefon:  &middot Fax: </h3>
+            </div>
+        </div>
+        <hr style="height:2px;border-width:0;color:black;background-color:black;margin-left: 50px;margin-top: 0">
+        <p class="has-text-weight-bold is-size-4 has-text-centered">Beratungstermin</p>
+    </div>
+    <div class="ml-6">
+        Sehr geehrte/r Frau/Herr {{ .Guest.LastName }} {{ .Guest.FirstName }}<br><br>
+        Sie werden gebeten am {{humanDateTime2 .Stay.Appointment }} Uhr<br>
+        zum Sozialarbeiter {{ .SocialWorker.LastName }}, {{ .SocialWorker.FirstName }} in Zimmer {{ .SocialWorker.Room
+        }} zu kommen.<br>
+        <div class="is-underlined">Wir möchten Sie bitten diesen Termin wahrzunehmen!</div>
+        <br><br>
+        Ort, den {{ .Date }} &emsp;&emsp;
+    </div>
+    <br><br>
+</section>
+{{end}}
+
+{{if and (and .Form.StayForm .Form.AppointmentForm) (not .Form.DataForm)}}
+<div class="has-page-break-after"></div>
+{{end}}
+{{if and (and .Form.DataForm .Form.AppointmentForm) (not .Form.DataForm)}}
+<div class="has-page-break-after"></div>
+{{end}}
+
+<!--Bestätigung ûber den Erhalt von Hilfeleistungen-->
+{{if .Form.ConfirmationForm}}
+<section>
+    <div class="mx-9">
+        <hr style="height:2px;border-width:0;color:black;background-color:black;margin-left: 50px;margin-bottom: 5px">
+        <div class="columns">
+            <div class="column is-one-fifth"></div>
+            <div class="column is-one-fifth">
+                <br>
+                <img src="" alt="Logo" width="70">
+            </div>
+            <div class="column">
+                <h2>Name der Einrichtung/h2>
+                <h3>Name Zusatz</h3>
+                <h3>Strasse</h3>
+                <h3>PLZ Ort</h3>
+                <h3 style="margin-bottom: 0">Telefon:  &middot Fax: </h3>
+            </div>
+        </div>
+        <hr style="height:2px;border-width:0;color:black;background-color:black;margin-left: 50px;margin-top: 0">
+        <p class="has-text-weight-bold is-size-4 has-text-centered">Bestätigung über den Erhalt von
+            Hilfeleistungen</p>
+        <br>
+    </div>
+    <div class="ml-6">
+        Ich {{ .Guest.LastName }} {{ .Guest.FirstName }}<br>
+        geboren am: {{humanBirthDay .Guest.BirthDate }} &nbsp;in: {{ .Guest.BirthPlace }}<br>
+        zur Zeit wohnhaft _______________________________________________________<br>
+        bestätige, dass ich vom: {{humanBirthDay .Stay.StartDate }} bis:_____________________<br>
+        in der Einrichtung Name nachfolgende <br>
+        Leistungen in Anspruch genommen habe: Übernachtung, Verpflegung und Beratung. <br>
+        <br>
+        <p class="has-text-weight-bold">Ich erkläre mittellos zu sein.</p><br>
+        Ort, den {{ .Date}} &emsp;&emsp; Unterschrift: __________________________________________
+    </div>
+</section>
+{{end}}
+
+{{if and (and .Form.StayForm .Form.AppointmentForm) (and (not .Form.ConfirmationForm) (not .Form.AppointmentForm))}}
+<div class="has-page-break-after"></div>
+{{end}}
+{{if and (and .Form.DataForm .Form.AppointmentForm) (and (not .Form.ConfirmationForm) (not .Form.AppointmentForm))}}
+<div class="has-page-break-after"></div>
+{{end}}
+
+<!--Aufnahme Clearingstelle-->
+{{if .Form.ClearingForm }}
+<section class="mt-6">
+    <div class="mx-4">
+        <h1 class="has-text-weight-bold is-size-4">Bewohner-Aufnahme (Clearingstelle)</h1>
+        <hr style="height:2px;border-width:0;color:black;background-color:black;margin-bottom: 1px;margin-top: 0">
+    </div>
+    <div class="columns">
+        <div class="column is-half">
+            <table class="table">
+                <tr>
+                    <td>Name:</td>
+                    <td>{{ .Guest.LastName }}</td>
+                </tr>
+                <tr>
+                    <td>Vorname</td>
+                    <td>{{ .Guest.FirstName }}</td>
+                </tr>
+                <tr>
+                    <td>Geburtsdatum</td>
+                    <td>{{humanBirthDay .Guest.BirthDate }}</td>
+                </tr>
+                <tr>
+                    <td>Geburtsort</td>
+                    <td>{{ .Guest.BirthPlace }}</td>
+                </tr>
+                <tr>
+                    <td>Nationalität:</td>
+                    <td>{{ .Guest.Nationality }}</td>
+                </tr>
+                <tr>
+                    <td>Datum</td>
+                    <td>{{humanBirthDay .Stay.StartDate }}</td>
+                </tr>
+            </table>
+        </div>
+        <div class="column is-half">
+            <table class="table is-bordered">
+                <tr>
+                    <td>Mitarbeiter Rezeption</td>
+                    <td>{{ .User.LastName }}, {{ .User.FirstName }}</td>
+                </tr>
+                <tr>
+                    <td>Zimmer:</td>
+                    <td>{{ .Stay.Room }}</td>
+                </tr>
+                <tr>
+                    <td>Vorl. Soz.-Päd.:</td>
+                    <td>{{ .SocialWorker.LastName }}, {{ .SocialWorker.FirstName }}</td>
+                </tr>
+                <tr>
+                    <td>Status:</td>
+                    {{if eq .Stay.TypeOfStay "UM"}}
+                    <td>Übern. mit Beratung</td>
+                    {{end}}
+                    {{if eq .Stay.TypeOfStay "UO"}}
+                    <td>Übern. ohne Beratung</td>
+                    {{end}}
+                    {{if eq .Stay.TypeOfStay "AM"}}
+                    <td>Aufnahme mit Beratung</td>
+                    {{end}}
+                </tr>
+            </table>
+        </div>
+    </div>
+    <div class="mx-4">
+        <hr style="height:2px;border-width:0;color:black;background-color:black;margin-bottom: 1px;margin-top: 0">
+    </div>
+    <div class="mx-3">
+        Übernachtungsnachweis für Monat: _______________
+        <br>
+    </div>
+    <div class="columns">
+        <div class="column is-half">
+            <div class="table mx-4">
+                <table class="table">
+                    <tr>
+                        <td>von:</td>
+                        <td>bis:</td>
+                    </tr>
+                    <tr>
+                        <td>von:</td>
+                        <td>bis:</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <div class="column is-half">
+            <div class="table mx-4">
+                <table class="table">
+                    <tr>
+                        <td>von:</td>
+                        <td>bis:</td>
+                    </tr>
+                    <tr>
+                        <td>von:</td>
+                        <td>bis:</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+</section>
+{{end}}
+{{end}}

@@ -1,0 +1,42 @@
+{{define "nav"}}
+
+<div class="">
+
+    <nav class="navbar is-link is-hidden-print" role="navigation" aria-label="main navigation">
+
+        <a role="button" class="navbar-burger has-text-white" aria-label="menu" aria-expanded="false" data-target="navbarMain">
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+        </a>
+
+        <div id="navbarMain" class="navbar-menu">
+            <div class="navbar-start">
+                <a class="navbar-item" href="/">Home</a>
+                    {{if .IsAuthenticated}}
+                    <a class="navbar-item" href="/stays?sort=-start_date">Aufenthalte</a>
+                    <a class="navbar-item" href="/guests">Personen</a>
+                    <a class="navbar-item" href="/guest/search">Suche</a>
+                    <a class="navbar-item" href="/users">Mitarbeiter</a>
+                     <a class="navbar-item" href="/stats">Statistik</a>
+                    {{end}}
+            </div>
+
+            <div class="navbar-end">
+                {{if .IsAuthenticated}}
+                <a class="navbar-item" href="/account/view">Konto</a>
+                <a class="navbar-item">
+                    <form action="/user/logout" method="POST">
+                        <input type='hidden' name='csrf_token' value='{{.CSRFToken}}'>
+                        <button class="button is-link">Logout</button>
+                    </form>
+                </a>
+                {{else}}
+                    <a class="navbar-item" href="/user/login">Login</a>
+                {{end}}
+            </div>
+        </div>
+    </nav>
+</div>
+{{end}}

@@ -1,0 +1,71 @@
+{{define "title"}}ÜIS - Statistik {{end}}
+
+{{define "main"}}
+<div data-theme="light">
+    <div class="columns">
+        <div class="column is-4 is-offset-2">
+            <div id="statistics" class="card">
+                <div class="card-header-title">Statistik für Jahr</div>
+                <div class="card-content">
+                    <div class="table-container scrollable-table">
+                        <table class="table table-sticky-stats is-hoverable is-bordered">
+                            <thead>
+                            <tr>
+                                <th class="has-background-grey-lighter">Jahr</th>
+                                <th class="has-background-grey-lighter">Anzahl Aufenthalte</th>
+                            </tr>
+                            </thead>
+                            {{range .StayCount}}
+                            <tr>
+                                <td>{{ .Year }}</td>
+                                <td>{{ .Count }}</td>
+                            </tr>
+                            {{end}}
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="column is-4 guest-table">
+            <div id="statistics2" class="card">
+                <div class="card-header-title">Aufenthalte nach Art</div>
+                <div class="card-content">
+                    <div class="table-container scrollable-table">
+                        <table class="table table-sticky-stats is-bordered is-hoverable">
+                            <tr>
+                                <th class="has-background-grey-lighter">Jahr</th>
+                                <th class="has-background-grey-lighter">Art</th>
+                                <th class="has-background-grey-lighter">Anzahl</th>
+                            </tr>
+                            {{range .StayCount2}}
+                            <tr>
+                                <td>{{ .Year }}</td>
+                                {{ if eq .TypeOfStay "AM"}}
+                                <td>
+                                    Aufnahme mit Beratung
+                                </td>
+                                {{end}}
+                                {{ if eq .TypeOfStay "UM"}}
+                                <td>
+                                    Aufenthalt mit Beratung
+                                </td>
+                                {{end}}
+                                {{ if eq .TypeOfStay "UO"}}
+                                <td>
+                                    Aufenthalt ohne Beratung
+                                </td>
+                                {{end}}
+                                <td>{{ .Count }}</td>
+                            </tr>
+                            {{end}}
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="column is-2">
+        </div>
+    </div>
+</div>
+
+{{end}}

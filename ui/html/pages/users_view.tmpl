@@ -1,0 +1,43 @@
+{{define "title"}}Alle User{{end}}
+
+{{define "main"}}
+{{if .Users}}
+<div data-theme="light">
+    <section class="is-light is-full-widescreen">
+        <div class="container is-full-fullhd">
+            <div class="block">
+                <h2 class="title has-text-centered has-text-black mt-3">Liste aller User</h2>
+            </div>
+            <div class="scrollable-table">
+                <div class="columns">
+                    <div class="column is-three-fifths is-offset-one-fifth">
+                        <table class="table table-sticky-stats is-hoverable is-bordered mx-auto">
+                            <thead>
+                                <tr>
+                                    <th class="has-background-grey-lighter">Nachname</th>
+                                    <th class="has-background-grey-lighter">Vorname</th>
+                                    <th class="has-background-grey-lighter">Bereich</th>
+                                    <th class="has-background-grey-lighter">Zimmer</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {{range .Users}}
+                                <tr>
+                                    <td>{{if $.IsAdmin }}<a href="/user/update/{{.ID}}">{{end}}{{.LastName}}</a></td>
+                                    <td>{{.FirstName}}</td>
+                                    <td>{{.JobTitle}}</td>
+                                    <td>{{.Room}}</td>
+                                </tr>
+                                {{end}}
+                            </tbody>
+                        </table>
+                    </div>
+                    {{else}}
+                    <p>Keine Daten vorhanden.</p>
+                    {{end}}
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+{{end}}

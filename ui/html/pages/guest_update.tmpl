@@ -1,0 +1,57 @@
+{{define "title"}}ÜIS - Änderung Klient{{end}}
+
+{{define "main"}}
+<div class="column is-half">
+    <form action='/guest/update/{{.Form.ID}}' method='POST' novalidate>
+        <input type='hidden' name='csrf_token' value='{{.CSRFToken}}'>
+        <div class="field">
+            <label for="lastname" class="label">Nachname:</label>
+            <input class="input" type='text' id="lastname" name='lastname' value='{{.Form.LastName}}'>
+        </div>
+        <div class="field">
+            <label for="firstname" class="label">Vorname:</label>
+            <input class="input" type="text" id="firstname" name="firstname" value="{{.Form.FirstName}}">
+        </div>
+        <div class="field">
+            <label for="birthdate" class="label">Geburtsdatum:</label>
+            <input type="date" id="birthdate" name="birthdate" value="{{dateReversed .Form.BirthDate}}"/>
+        </div>
+        <div class="field">
+            <label for="birthplace" class="label">Geburtsort:</label>
+            <input class="input" type="text" id="birthplace" name="birthplace" value="{{.Form.BirthPlace}}">
+        </div>
+        <div class="field">
+            <label for="idnumber" class="label">Ausweisnummer:</label>
+            <input class="input" type="text" id="idnumber" name="idnumber" value="{{.Form.IdNumber}}">
+        </div>
+        <div class="field">
+            <label for="nationality" class="label">Nationalität:</label>
+            <input class="input" type="text" id="nationality" name="nationality" value="{{.Form.Nationality}}">
+        </div>
+        <div class="field">
+            <label for="lastresidence" class="label">Letzter Wohnort:</label>
+            <input class="input" type="text" id="lastresidence" name="lastresidence" value="{{.Form.LastResidence}}">
+        </div>
+        <div class="field">
+            <label for="houseban" class="checkbox">Hausverbot:
+                <input type="checkbox" id="houseban" name="houseban" {{if .Form.HouseBan}} checked {{end}}>
+            </label>
+        </div>
+
+        <div class="field">
+            <label for="hbstartdate" class="label">Hausverbot Beginn:</label>
+            <input type="date" id="hbstartdate" name="hbstartdate" value="{{dateReversed .Form.HbStartDate}}">
+        </div>
+
+        <div class="field">
+            <label for="hbenddate" class="label">Hausverbot Ende:</label>
+            <input type="date" id="hbenddate" name="hbenddate" value="{{dateReversed .Form.HbEndDate}}">
+        </div>
+
+        <div class="control my-5">
+            <button class="button is-primary" type='submit'>Änderung Speichern</button>
+        </div>
+    </form>
+</div>
+
+{{end}}

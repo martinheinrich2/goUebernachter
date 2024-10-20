@@ -1,0 +1,89 @@
+{{define "title"}}ÜIS - User Ändern{{end}}
+
+{{define "main"}}
+<div data-theme="light">
+    <section class="">
+        <div class="container mt-3">
+            <div class="columns">
+                <div class="column is-three-fifths is-offset-one-fifth has-text-centered">
+                    <section id="change-user" class="hero is-light is-large">
+                        <div class="box has-background-white-ter">
+                            <div>
+                                <h3 class="title">User ändern</h3>
+                                <hr class="login-hr">
+                            </div>
+                            <form action='/user/update/{{.Form.ID}}' method='POST' novalidate>
+                                <input type='hidden' name='csrf_token' value='{{.CSRFToken}}'>
+                                <div class="field">
+                                    <label for="lastname" class="label">Nachname:</label>
+                                    <input class="input is-rounded" type='text' name='lastname' id="lastname"
+                                           value='{{.Form.LastName}}'>
+                                </div>
+                                <div class="field">
+                                    <label for="firstname" class="label">Vorname:</label>
+                                    <input class="input is-rounded" type='text' id="firstname" name='firstname'
+                                           value='{{.Form.FirstName}}'>
+                                </div>
+                                <div class="field">
+                                    <label for="email" class="label">Email:</label>
+                                    <input class="input is-rounded" type='email' id="email" name='email'
+                                           value='{{.Form.Email}}'>
+                                </div>
+                                <div class="field">
+                                    <label class="label" for="job">Job Titel:</label>
+                                    <div class="control">
+                                        <div class="select is-rounded">
+                                            <select name="job_title" id="job">
+                                                {{if eq .Form.JobTitle "Sozialarbeit"}}
+                                                <option value="Sozialarbeit" selected>Sozialarbeit</option>
+                                                {{end}}
+                                                {{if eq .Form.JobTitle "Rezeption"}}
+                                                <option value="Rezeption" selected>Rezeption</option>
+                                                {{end}}
+                                                {{if eq .Form.JobTitle "Verwaltung"}}
+                                                <option value="Verwaltung" selected>Verwaltung</option>
+                                                {{end}}
+                                                <option value="Sozialarbeit">Sozialarbeit</option>
+                                                <option value="Rezeption">Rezeption</option>
+                                                <option value="Verwaltung">Verwaltung</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="field">
+                                    <label for="room" class="label">Zimmer:</label>
+                                    <input class="input is-rounded" type='text' id="room" name='room'
+                                           value='{{.Form.Room}}'>
+                                </div>
+                                <div class="field">
+                                    <label for="admin" class="checkbox has-text-weight-bold">Administrator:
+                                        <input type="checkbox" id="admin" name="admin" {{if .Form.Admin}} checked
+                                               {{end}}>
+                                    </label>
+                                </div>
+                                <div class="field">
+                                    <label for="active" class="checkbox mt-5 has-text-danger has-text-weight-bold">Account
+                                        aktiv:
+                                        <input type="checkbox" id="active" name="active" {{if .Form.Active}} checked
+                                               {{end}}>
+                                    </label>
+                                </div>
+                                <div class="control my-5">
+                                    {{if .IsAdmin}}
+                                    <button class="button is-primary" type='submit'>Änderung speichern</button>
+                                    {{end}}
+                                </div>
+                            </form>
+                            {{if .IsAdmin}}
+                            <button class="button is-warning"><a href="/user/password/reset/{{.Form.ID}}"
+                                                                 class="has-text-black">Passwort zurücksetzen</a>
+                            </button>
+                            {{end}}
+                        </div>
+                    </section>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+{{end}}

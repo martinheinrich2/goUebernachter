@@ -1,0 +1,6 @@
+SRC_DB="./reception.db"
+DST_DB="./reception_backup.db"
+
+EMAIL_HOST="your_email_host"
+EMAIL_USERNAME="somemail@mailprivider.com"
+EMAIL_PASSWORD="supersecretpassword"

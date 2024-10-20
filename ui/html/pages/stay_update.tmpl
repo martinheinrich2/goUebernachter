@@ -1,0 +1,104 @@
+{{define "title"}}ÜIS - Aufenthalt ändern{{end}}
+
+{{define "main"}}
+<div data-theme="light">
+    <section id="create_stay" class="hero is-light is-large">
+        <div class="container has-text-left mt-2">
+            <div class="columns">
+                <div class="column is-8 is-offset-2">
+                    <div>
+                        <h3 class="title">Aufenthalt</h3>
+                        <hr class="login-hr">
+                        <p class="subtitle">Daten für Aufenthalt ändern.</p>
+                        <p>altueller User: {{.AuthUser.ID}} {{.AuthUser.JobTitle}}</p>
+                    </div>
+                    <div class="box has-background-light-40">
+                        <form action='/stay/update/{{.Form.ID}}' method='POST' novalidate>
+                            <input type='hidden' name='csrf_token' value='{{.CSRFToken}}'>
+                            <div class="title">{{ .Guest.LastName }} {{ .Guest.FirstName }}</div>
+                            <div class="field">
+                                <label for="start_date" class="label">Einzug:</label>
+                                <input type="date" id="start_date" name="start_date"
+                                       value="{{dateReversed .Form.StartDate}}"/>
+                            </div>
+                            <div class="field">
+                                <label for="end_date" class="label">Auszug:</label>
+                                <input type="date" id="end_date" name="end_date"
+                                       value="{{dateReversed .Form.EndDate}}"/>
+                            </div>
+                            <div class="control">
+                                <label for="type_of_stay" class="label">Aufenthalt Art:</label>
+                                <div class="select">
+                                    <select name="type_of_stay" id="type_of_stay">
+                                        {{if eq .Form.TypeOfStay "UM"}}
+                                        <option value="UM">Übernachter mit Beratung</option>
+                                        {{end}}
+                                        {{if eq .Form.TypeOfStay "UO"}}
+                                        <option value="UO">Übernachter ohne Beratung</option>
+                                        {{end}}
+                                        {{if eq .Form.TypeOfStay "AM"}}
+                                        <option value="AM">Aufnahme mit Beratung</option>
+                                        {{end}}
+                                        <option value="UM">Übernachter mit Beratung</option>
+                                        <option value="UO">Übernachter ohne Beratung</option>
+                                        <option value="AM">Aufnahme mit Beratung</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="field">
+                                <label for="room" class="label">Zimmer:</label>
+                                <label class='is-color-danger'>{{ .Stay.Room }}</label>
+                                <div class="columns">
+                                    <div class="column is-one-fifth">
+                                        <div class="control">
+                                            <input class="input" type="text" id="room" name="room"
+                                                   value="{{.Form.Room}}">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="control">
+                                <div class="select is-multiple">
+                                    <label for="social_worker_id" class="label">Sozialarbeiter</label>
+                                    <select name="social_worker_id" id="social_worker_id">
+                                        <option value="{{ .SocialWorker.ID }}">{{ .SocialWorker.LastName}} {{
+                                            .SocialWorker.FirstName }} {{ .SocialWorker.Room }}
+                                        </option>
+                                        {{range .Form.SocialWorkers}}
+                                        <option value="{{.ID}}">{{.LastName}} {{.FirstName}} - {{.Room}}</option>
+                                        {{end}}
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="field">
+                                <label for="appointment" class="label">Beratungstermin:</label>
+                                <input type="datetime-local" id="appointment" name="appointment"
+                                       value="{{dateTimeForm .Form.Appointment}}"/>
+                            </div>
+                            <div class="field">
+                                <label for="appointment_done" class="checkbox">Beratung erfolgt:
+                                    <input type="checkbox" id="appointment_done" name="appointment_done" {{if
+                                           .Form.AppointmentDone}} checked {{end}}>
+
+                                </label>
+                            </div>
+                            <div class="field">
+                                <label for="stay_processed" class="checkbox">Daten erfasst:
+                                    <input type="checkbox" id="stay_processed" name="stay_processed" {{if
+                                           .Form.StayProcessed}} checked {{end}}>
+                                </label>
+                            </div>
+                            <div><label>Aufgenommen durch: {{ .User.LastName }}, {{ .User.FirstName}}</label></div>
+                            <div class="control my-5">
+                                <button class="button is-primary" type="submit">Speichern</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!--</div>-->
+    <!--<div class="column is-half">-->
+</div>
+{{end}}

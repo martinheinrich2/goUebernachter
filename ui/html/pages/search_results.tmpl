@@ -1,0 +1,29 @@
+{{define "title"}}ÜIS - Suchergebnisse{{end}}
+{{define "nav"}} <p></p> {{end}}
+{{define "result"}}
+<div class="columns is-centered is-mobile">
+    <div class="column is-one-half is-narrow mx-2">
+        <div id="search-results">
+            <div class="table-container scrollable-table3">
+                <table class="table table-sticky-stats is-hoverable is-bordered mx-auto is-narrow">
+                    <tr>
+                        <th class="has-background-grey-lighter">Nachname</th>
+                        <th class="has-background-grey-lighter">Vorname</th>
+                        <th class="has-background-grey-lighter">Geburtsdatum</th>
+                    </tr>
+
+                    {{range .Guests}}
+                    <tr>
+                        <td><a href="/guest/view/{{.ID}}">{{.LastName}}</a></td>
+                        <td>{{.FirstName}}</td>
+                        <td>{{humanBirthDay .BirthDate}}</td>
+                    </tr>
+                    {{end}}
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+{{end}}
+{{define "footer"}} <p></p> {{end}}

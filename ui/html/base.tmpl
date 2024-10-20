@@ -1,0 +1,46 @@
+{{define "base"}}
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset='utf-8'>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{{block "title" .}} - ÜIS{{end}}</title>
+    <link nonce="74656" rel='stylesheet' href='/static/css/bulma.css'>
+    <link nonce="74656" rel='stylesheet' href='/static/css/bulma-print.css'>
+    <link nonce="74656" rel='stylesheet' href='/static/css/styles.css'>
+    <link rel='shortcut icon' href='/static/img/favicon.ico' type='image/x-icon'>
+    <script nonce="74656" src='/static/js/htmx.min.js' type='text/javascript'></script>
+    <script nonce="74656" src='/static/js/navbar.js' type='text/javascript'></script>
+    <script nonce="74656" src='/static/js/fa.all.min.js' type='text/javascript'></script>
+</head>
+<body class="" hx-headers='{"X-CSRFToken": "{{.CSRFToken}}"}'>
+<header>
+    {{block "nav" .}}{{end}}
+</header>
+
+<main>
+    <!-- Display the flash message if one exists -->
+    {{with .Flash}}
+        <div class="notification is-success">
+            <button class="delete"></button>
+            {{.}}
+        </div>
+    {{end}}
+    {{block "main" .}}{{end}}
+</main>
+<body>
+    {{block "result" .}}{{end}}
+</body>
+
+{{block "footer" .}}
+<footer class="footer is-hidden-print">
+    <div class="content has-text-centered">
+        <div class="">
+            Powered by <a href='https://golang.org/'>Go</a> in {{.CurrentYear}}
+        </div>
+    </div>
+</footer>
+{{end}}
+</body>
+</html>
+{{end}}

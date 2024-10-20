@@ -1,0 +1,126 @@
+{{define "title"}}Alle Aufenthalte{{end}}
+
+{{define "main"}}
+{{if .StayJoinGuest}}
+<div data-theme="light">
+    <section class="is-light is-full-widescreen">
+        <div class="container is-full-fullhd">
+            <div class="block">
+                <h2 class="title has-text-centered has-text-black mt-3">Liste aller Aufenthalte</h2>
+            </div>
+            <div class="columns">
+                <div class="column">
+                    <div class="table-container scrollable-table4">
+                    <table id="stays-table" class="table is-hoverable is-bordered mx-auto is-narrow">
+                        <thead class="has-background-grey-lighter">
+                        <tr>
+                            <th><a href="/stays?sort=-guests.last_name"><i class="fa-solid fa-arrow-down mr-1"></i></a>Nachname<a
+                                    href="/stays?sort=guests.last_name"><i class="fa-solid fa-arrow-up ml-1"></i></a>
+                            </th>
+                            <th><a href="/stays?sort=-guests.first_name"><i class="fa-solid fa-arrow-down mr-1"></i></a>Vorname<a
+                                    href="/stays?sort=guests.first_name"><i
+                                    class="fa-solid fa-arrow-up ml-1"></i></a></th>
+                            <th><a href="/stays?sort=-type_of_stay"><i class="fa-solid fa-arrow-down mr-1"></i></a>Art<a
+                                    href="/stays?sort=type_of_stay"><i class="fa-solid fa-arrow-up ml-1"></i></a>
+                            </th>
+                            <th><a href="/stays?sort=-start_date"><i
+                                    class="fa-solid fa-arrow-down mr-1"></i></a>Einzug<a
+                                    href="/stays?sort=start_date"><i class="fa-solid fa-arrow-up ml-1"></i></a></th>
+                            <th><a href="/stays?sort=-end_date"><i class="fa-solid fa-arrow-down mr-1"></i></a>Auszug<a
+                                    href="/stays?sort=end_date"><i class="fa-solid fa-arrow-up ml-1"></i></a></th>
+                            <th><a href="/stays?sort=-stay.room"><i class="fa-solid fa-arrow-down mr-1"></i></a>Zimmer<a
+                                    href="/stays?sort=stay.room"><i class="fa-solid fa-arrow-up ml-1"></i></a></th>
+                            <th><a href="/stays?sort=-users.last_name"><i class="fa-solid fa-arrow-down mr-1"></i></a>Sozialarbeiter<a
+                                    href="/stays?sort=users.last_name"><i class="fa-solid fa-arrow-up ml-1"></i></a>
+                            </th>
+                            <th>
+                                <a href="/stays?sort=-appointment_done"><i class="fa-solid fa-arrow-down mr-1"></i></a>
+                                <a href="/stay/appointmentopen" class="button is-normal">Beratung</a>
+
+                                <a href="/stays?sort=appointment_done"><i class="fa-solid fa-arrow-up ml-1"></i></a>
+                            </th>
+                            <th><a href="/stays?sort=-stay_processed"><i class="fa-solid fa-arrow-down mr-1"></i></a>
+                                <a href="/stay/staynotprocessed" class="button is-normal">Erfasst</a>
+                                <a href="/stays?sort=stay_processed"><i class="fa-solid fa-arrow-up ml-1"></i></a>
+                            </th>
+                        </tr>
+                        </thead>
+                        <tbody id="stays-table-body">
+                        {{range .StayJoinGuest}}
+                        <tr>
+                            <td><a href="/stay/detail/{{.ID}}">{{.GuestLastName}}</a></td>
+                            <td>{{.GuestFirstName}}</td>
+                            {{if eq .TypeOfStay "UM"}}
+                            <td>Ü mit B</td>
+                            {{end}}
+                            {{if eq .TypeOfStay "UO"}}
+                            <td>Ü ohne B</td>
+                            {{end}}
+                            {{if eq .TypeOfStay "AM"}}
+                            <td>A mit B</td>
+                            {{end}}
+                            <td>{{humanBirthDay .StartDate}}</td>
+                            <td>{{humanBirthDay .EndDate}}</td>
+                            <td>{{.Room}}</td>
+                            <td>{{.SwLastName}}, {{.SwFirstName}}</td>
+                            <td><input type="checkbox" name="Beratung" {{if .AppointmentDone}} checked {{end}}></td>
+                            <td><input type="checkbox" name="Erfasst" {{if .StayProcessed}} checked {{end}}></td>
+                        </tr>
+                        {{end}}
+                        </tbody>
+                    </table>
+                    </div>
+                    <nav class="pagination is-centered is-small" role="navigation" aria-label="pagination">
+                        {{ if gt .Metadata.CurrentPage 1}}
+                        <a href="?page={{ .Metadata.PreviousPage }}&sort={{ .Metadata.SortDirection}}&page_size={{ .Metadata.PageSize}}"
+                           class="pagination-previous">Vorige Seite</a>
+                        {{else}}
+                        <a href="?page=1&sort={{ .Metadata.SortDirection}}&page_size={{ .Metadata.PageSize}}" class="pagination-previous">Vorige Seite</a>
+                        {{end}}
+                        {{ if lt .Metadata.PlusFive .Metadata.LastPage }}
+                        <a href="?page={{ .Metadata.PlusFive }}&sort={{ .Metadata.SortDirection}}&page_size={{ .Metadata.PageSize}}" class="pagination-next">+ 5 Seiten</a>
+                        {{end}}
+                        {{ if lt .Metadata.PlusTen .Metadata.LastPage }}
+                        <a href="?page={{ .Metadata.PlusTen }}&sort={{ .Metadata.SortDirection}}&page_size={{ .Metadata.PageSize}}" class="pagination-next">+ 10 Seiten</a>
+                        {{end}}
+                        {{ if lt .Metadata.FirstPage .Metadata.MinusFive }}
+                        <a href="?page={{ .Metadata.MinusFive }}&sort={{ .Metadata.SortDirection}}&page_size={{ .Metadata.PageSize}}" class="pagination-next">- 5 Seiten</a>
+                        {{end}}
+                        {{ if lt .Metadata.FirstPage .Metadata.MinusTen }}
+                        <a href="?page={{ .Metadata.MinusTen }}&sort={{ .Metadata.SortDirection}}&page_size={{ .Metadata.PageSize}}" class="pagination-next">- 10 Seiten</a>
+                        {{end}}
+                        {{if lt .Metadata.CurrentPage .Metadata.LastPage }}
+                        <a href="?page={{ .Metadata.NextPage }}&sort={{ .Metadata.SortDirection}}&page_size={{ .Metadata.PageSize}}"
+                           class="pagination-next">Nächste Seite</a>
+                        {{else}}
+                        <a href="?page={{ .Metadata.LastPage }}&sort={{ .Metadata.SortDirection}}&page_size={{ .Metadata.PageSize}}"
+                           class="pagination-next">Nächste Seite</a>
+                        {{end}}
+                    </nav>
+                    <div class="has-text-centered">
+                        <p>Seite: {{ .Metadata.CurrentPage }} / {{ .Metadata.LastPage}} - Anzahl pro Seite {{ .Metadata.PageSize }}</p>
+                    </div>
+                    <form action="">
+                    <div class="select is-small selector">
+                        <label class="label" for="page_size">Anzahl pro Seite: </label>
+                        <select name="page_size" id="page_size">
+                            <option value="5">5</option>
+                            <option value="10">10</option>
+                            <option value="15">15</option>
+                            <option value="20">20</option>
+                            <option value="25">25</option>
+                            <option value="25">30</option>
+                            <option value="25">50</option>
+                        </select>
+                        <input type="submit" value="Senden">
+                    </div>
+                    </form>
+                </div>
+                {{else}}
+                <p>Keine Daten vorhanden.</p>
+            </div>
+        </div>
+    </section>
+</div>
+{{end}}
+{{end}}

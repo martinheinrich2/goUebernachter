@@ -1,0 +1,35 @@
+{{define "title"}}Alle Übernachter{{end}}
+
+{{define "main"}}
+{{if .Guests}}
+<div class="container is-max-desktop mt-3">
+    <div class="columns">
+        <div class="column is-three-fifths is-offset-one-fifth">
+            <h2 class="title has-text-centered is-color-black">Liste der Übernachter</h2>
+            <div class="table-container scrollable-table">
+                <table class="table table-sticky is-hoverable is-bordered mx-auto is-narrow">
+                    <thead>
+                    <tr>
+                        <th class="has-background-grey-lighter">Nachname</th>
+                        <th class="has-background-grey-lighter">Vorname</th>
+                        <th class="has-background-grey-lighter">Geburtsdatum</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {{range .Guests}}
+                    <tr>
+                        <td><a href="/guest/view/{{.ID}}">{{.LastName}}</a></td>
+                        <td>{{.FirstName}}</td>
+                        <td>{{humanBirthDay .BirthDate}}</td>
+                    </tr>
+                    {{end}}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{{else}}
+<p>Keine Daten vorhanden.</p>
+{{end}}
+{{end}}

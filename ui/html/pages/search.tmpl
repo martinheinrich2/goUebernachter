@@ -1,0 +1,32 @@
+{{define "title"}}ÜIS - Klientensuche{{end}}
+
+{{define "main"}}
+<form class="mt-3">
+    <input type='hidden' name='csrf_token' value='{{.CSRFToken}}'>
+    <div class="columns is-mobile is-centered">
+        <div class="column is-one-quarter">
+            <div class="title has-text-centered">Klientensuche</div>
+            <div class="field">
+
+                <input class="input form-control" type="search"
+                       name="search" placeholder="Suche Gast..."
+                       hx-post="/guest/search"
+                       hx-trigger="keyup changed delay:500ms, search"
+                       hx-target="#search-results"
+                       hx-swap="innerHTML show:top"
+                       id="search-guests"
+                />
+            </div>
+        </div>
+    </div>
+
+</form>
+
+<div id="search-results" hx-swap="afterbegin">
+
+</div>
+
+<div class="columns is-mobile is-centered mb-5 mt-3">
+    <a class="button is-link mx-3" href="/guest/create">Neuen Klienten anlegen</a>
+</div>
+{{end}}

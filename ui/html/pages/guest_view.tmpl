@@ -1,0 +1,126 @@
+{{define "title"}}Personen Information{{end}}
+
+{{define "main"}}
+<div class="container is-max-desktop">
+    <div class="columns is-centered">
+        <div class="column">
+            <div class="card ml-3 mt-3">
+                {{if .Guest.HouseBan}}
+                <div class="notification is-danger">Achtung Hausverbot!</div>
+                {{end}}
+                <div class="card-header-title has-background-link"><h2 class="has-text-white">Klientendaten</h2></div>
+                <div class="card-content">
+                    <div class="columns">
+                        <div class="column is-half">
+                            <table class="table">
+                                <tr>
+                                    <th>Name</th>
+                                    <td>{{ .Guest.LastName }}, {{ .Guest.FirstName }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Geburtstag</th>
+                                    <td>{{humanBirthDay .Guest.BirthDate}}</td>
+                                </tr>
+                                <tr>
+                                    <th>Geburtsort</th>
+                                    <td>{{ .Guest.BirthPlace }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Ausweis Nr.</th>
+                                    <td>{{ .Guest.IdNumber }}</td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="column is-half">
+                            <table class="table">
+                                <tr>
+                                    <th>Nationalität</th>
+                                    <td>{{ .Guest.Nationality }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Letzter Wohnort</th>
+                                    <td>{{ .Guest.LastResidence }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Hausverbot</th>
+                                    <td><input type="checkbox" name="Hausverbot" {{if .Guest.HouseBan}} checked
+                                               {{end}}></td>
+                                </tr>
+                                {{if .Guest.HouseBan }}
+                                <tr>
+                                    <th>Hausverbot vom:</th>
+                                    <td>{{ humanBirthDay .Guest.HbStartDate }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Hausverbot bis:</th>
+                                    <td>{{humanBirthDay .Guest.HbEndDate }}</td>
+                                </tr>
+                                {{end}}
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="buttons are-small mb-2">
+        <form action="/guest/update/{{.Guest.ID}}">
+            <button class="button is-warning ml-3" type="submit">Ändern</button>
+        </form>
+        <form action="/stay/create/{{.Guest.ID}}">
+            <button class="button is-primary">Aufenthalt erfassen</button>
+        </form>
+    </div>
+</div>
+
+{{end}}
+
+{{define "result"}}
+<div class="container is-max-desktop">
+    <div class="columns is-centered">
+        <div class="column">
+            <div class="card ml-3">
+                <div class="card-header-title has-background-link">
+                    <h2 class="has-text-white">Aufenthalte</h2>
+                </div>
+                <div class="card-content">
+                    {{if .StayJoinUser}}
+                    <div class="table-container scrollable-table2">
+                        <table class="table table-sticky-stats is-hoverable is-bordered mx-auto is-narrow">
+                            <tr>
+                                <th class="has-background-grey-lighter">Einzug</th>
+                                <th class="has-background-grey-lighter">Auszug</th>
+                                <th class="has-background-grey-lighter">Aufenthalt</th>
+                                <th class="has-background-grey-lighter">Zimmer</th>
+                                <th class="has-background-grey-lighter">Sozialarbeiter</th>
+                                <th class="has-background-grey-lighter">Beratungstermin</th>
+                            </tr>
+                            {{range .StayJoinUser}}
+                            <tr>
+                                <td><a href="/stay/detail/{{.ID}}">{{humanBirthDay .StartDate}}</a></td>
+                                <td>{{humanBirthDay .EndDate}}</td>
+                                {{if eq .TypeOfStay "UM"}}
+                                <td>Ü mit B</td>
+                                {{end}}
+                                {{if eq .TypeOfStay "UO"}}
+                                <td>Ü ohne B</td>
+                                {{end}}
+                                {{if eq .TypeOfStay "AM"}}
+                                <td>A mit B</td>
+                                {{end}}
+                                <td>{{.Room}}</td>
+                                <td>{{.SwLastName}}, {{.SwFirstName}}</td>
+                                <td>{{humanDateTime .Appointment}}</td>
+                            </tr>
+                            {{end}}
+                        </table>
+                    </div>
+                    {{else}}
+                    <p>Keine Daten vorhanden!</p>
+                    {{end}}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{{end}}

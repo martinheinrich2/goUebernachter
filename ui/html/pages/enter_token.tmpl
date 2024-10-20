@@ -1,0 +1,37 @@
+{{define "title"}}ÜIS - Reset Passwort{{end}}
+
+{{define "main"}}
+<div data-theme="light">
+    <div class="container is-max-desktop">
+        <div class="columns">
+            <div class="mt-5 column is-three-fifths is-offset-one-fifth">
+                <section class="hero is-medium has-background-white-ter">
+                    <div class="hero-body has-text-centered">
+                        <div class="login">
+                            <div>
+                                <h3 class="title">Passwort zurücksetzen</h3>
+                                <p>Code für {{ .Form.Email }} gesendet.</p>
+                                <hr class="login-hr">
+                            </div>
+                            <form action="/enter_token/{{ .Form.Email }}" method="POST" novalidate>
+                                <input type="hidden" name="csrf_token" value="{{.CSRFToken}}">
+                                {{range .Form.NonFieldErrors}}
+                                <div class='is-color-danger'>{{.}}</div>
+                                {{end}}
+                                <div class="field">
+                                    <label for="token" class="label">Code eingeben:</label>
+                                    <input class="input is-medium is-rounded" type='text' id='token' name='token'
+                                           placeholder="Code">
+                                </div>
+                                <button class="button is-block is-fullwidth is-primary is-medium is-rounded mt-5"
+                                        type="submit">Code senden
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </div>
+</div>
+{{end}}

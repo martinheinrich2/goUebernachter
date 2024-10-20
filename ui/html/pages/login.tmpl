@@ -1,0 +1,60 @@
+{{define "title"}}ÜIS - Login{{end}}
+
+{{define "main"}}
+<div data-theme="light">
+    <div class="container is-max-desktop">
+        <div class="columns">
+            <div class="mt-5 column is-three-fifths is-offset-one-fifth">
+                <section class="hero is-medium has-background-white-ter">
+                    <div class="hero-body has-text-centered">
+                        <div class="login">
+                            <div>
+                                <h3 class="title">Login</h3>
+                                <hr class="login-hr">
+                            </div>
+                            <form action="/user/login" method="POST" novalidate>
+                                <input type="hidden" name="csrf_token" value="{{.CSRFToken}}">
+                                {{range .Form.NonFieldErrors}}
+                                <div class='is-color-danger'>{{.}}</div>
+                                {{end}}
+                                <div class="field">
+                                    <label for="email" class="label">Email:</label>
+                                    {{with .Form.FieldErrors.email}}
+                                    <label class='label has-text-danger'>{{.}}</label>
+                                    {{end}}
+                                    <input class="input is-medium is-rounded" type='email' id='email' name='email'
+                                           placeholder="hello@example.com" value='{{.Form.Email}}'>
+                                </div>
+                                <div class="field">
+                                    <label class="label">Password:</label>
+                                    {{with .Form.FieldErrors.password}}
+                                    <label class='label has-text-danger'>{{.}}</label>
+                                    {{end}}
+                                    <input class="input is-medium is-rounded" type='password' name='password'
+                                           placeholder="**********">
+                                </div>
+                                <button class="button is-block is-fullwidth is-primary is-medium is-rounded mt-5"
+                                        type="submit">Login
+                                </button>
+                            </form>
+                            <br>
+                            <nav class="level">
+                                <div class="level-item has-text-centered">
+                                    <div>
+                                        <a href="/account/forgot_password">Passwort vergessen?</a>
+                                    </div>
+                                </div>
+                                <div class="level-item has-text-centered">
+                                    <div>
+                                        <a href="/user/signup">Account anlegen</a>
+                                    </div>
+                                </div>
+                            </nav>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </div>
+</div>
+{{end}}

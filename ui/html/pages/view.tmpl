@@ -1,0 +1,33 @@
+{{define "title"}}Article #{{.Article.ID}}{{end}}
+
+{{define "main"}}
+{{with .Article}}
+<div class="container is-max-widescreen">
+    <div class="columns is-centered">
+        <div class="column">
+            <div class='card m-5'>
+                <div class='card-header-title has-background-info-25'>
+                    <div class='container'>
+                        <strong class='is-pulled-left'>{{.Title}}</strong>
+                        <span class='is-pulled-right'>#{{.ID}}</span>
+                    </div>
+                </div>
+                <div class='card-content'>
+                    <p class='container mx-5'>
+                        {{.Content}}
+                    </p>
+                </div>
+                <div class='card-footer'>
+                    <time>Created: {{humanDate .Created}}</time>
+                    <p class="mx-2">by {{.Author}}</p>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+
+{{end}}
+{{end}}
