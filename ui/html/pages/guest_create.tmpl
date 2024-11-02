@@ -7,14 +7,14 @@
         <div class="field">
             <label for="lastname" class="label">Nachname:</label>
             {{with .Form.FieldErrors.lastname}}
-            <label class='is-color-danger'>{{.}}</label>
+            <label class='has-text-danger'>{{.}}</label>
             {{end}}
             <input class="input" type='text' id="lastname" name='lastname' value='{{.Form.LastName}}'>
         </div>
         <div class="field">
             <label for="firstname" class="label">Vorname:</label>
             {{with .Form.FieldErrors.firstname}}
-            <label class='is-color-danger'>{{.}}</label>
+            <label class='has-text-danger'>{{.}}</label>
             {{end}}
             <input class="input" type="text" id="firstname" name="firstname" value="{{.Form.FirstName}}">
         </div>
@@ -27,16 +27,13 @@
         <div class="field">
             <label for="birthplace" class="label">Geburtsort:</label>
             {{with .Form.FieldErrors.birthplace}}
-            <label class='is-color-danger'>{{.}}</label>
+            <label class='has-text-danger'>{{.}}</label>
             {{end}}
             <input class="input" type="text" id="birthplace" name="birthplace" value="{{.Form.BirthPlace}}">
         </div>
         <div class="field">
             <label for="idnumber" class="label">Ausweisnummer:</label>
-            {{with .Form.FieldErrors.idnumber}}
-            <label class='is-color-danger'>{{.}}</label>
-            {{end}}
-            <input class="input" type="text" id="idnumber" name="idnumber" value="{{.Form.IdNumber}}">
+            <input class="input" type="text" id="idnumber" name="idnumber" value="">
         </div>
         <div class="field">
             <label for="nationality" class="label">Nationalität:</label>
@@ -47,10 +44,7 @@
         </div>
         <div class="field">
             <label for="lastresidence" class="label">Letzter Wohnort:</label>
-            {{with .Form.FieldErrors.lastresidence}}
-            <label class="is-color-danger">{{.}}</label>
-            {{end}}
-            <input class="input" type="text" id="lastresidence" name="lastresidence" value="{{.Form.LastResidence}}">
+            <input class="input" type="text" id="lastresidence" name="lastresidence" value="">
         </div>
         <div class="field">
             <label for="houseban" class="checkbox">Hausverbot:

@@ -104,9 +104,9 @@ func (app *application) guestCreatePost(w http.ResponseWriter, r *http.Request) 
 	form.CheckField(validator.NotBlank(form.LastName), "lastname", "Eingabe erforderlich")
 	form.CheckField(validator.NotBlank(form.FirstName), "firstname", "Eingabe erforderlich")
 	form.CheckField(validator.NotBlank(form.BirthPlace), "birthplace", "Eingabe erforderlich")
-	form.CheckField(validator.NotBlank(form.IdNumber), "idNumber", "Eingabe erforderlich")
-	form.CheckField(validator.NotBlank(form.Nationality), "nationality", "Eingabe erforderlich")
-	form.CheckField(validator.NotBlank(form.LastResidence), "lastResidence", "Eingabe erforderlich")
+	// form.CheckField(validator.NotBlank(form.IdNumber), "idNumber", "Eingabe erforderlich")
+	// form.CheckField(validator.NotBlank(form.Nationality), "nationality", "Eingabe erforderlich")
+	// form.CheckField(validator.NotBlank(form.LastResidence), "lastResidence", "Eingabe erforderlich")
 	// Use the Valid() method to see if any of the checks failed. Re-render the template
 	// passing in the form, if check failed.
 	if !form.Valid() {
