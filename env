@@ -1,5 +1,5 @@
-SRC_DB="./reception.db"
-DST_DB="./reception_backup.db"
+SRC_DB="./sqlite.db"
+DST_DB="./sqlite_backup.db"
 
 EMAIL_HOST="your_email_host"
 EMAIL_USERNAME="somemail@mailprivider.com"

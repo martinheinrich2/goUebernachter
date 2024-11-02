@@ -139,7 +139,7 @@ func main() {
 
 // The openDB() function wraps sql.Open() and returns a sql.DB connection pool
 func openDB() (*sql.DB, error) {
-	db, err := sql.Open("sqlite", "./sqlite.db")
+	db, err := sql.Open("sqlite", os.Getenv("SRC_DB"))
 	if err != nil {
 		return nil, err
 	}
