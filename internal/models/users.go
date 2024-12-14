@@ -168,7 +168,7 @@ func (m *UserModel) GetUserId(email string) (int, error) {
 // The All method returns all staff from the database.
 func (m *UserModel) All() ([]User, error) {
 	// Create SQL statement to select all articles
-	stmt := `SELECT id, last_name, first_name, job_title, room FROM users order by last_name limit 10`
+	stmt := `SELECT id, last_name, first_name, job_title, room FROM users order by last_name`
 	rows, err := m.DB.Query(stmt)
 	if err != nil {
 		return nil, err

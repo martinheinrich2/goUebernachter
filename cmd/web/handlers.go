@@ -352,7 +352,7 @@ func (app *application) stayCreatePost(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	// Validate the form contents using the helper function.
-	form.CheckField(validator.NotBlank(form.Room), "room", "This field cannot be blank")
+	form.CheckField(validator.NotBlank(form.Room), "room", "Das Feld darf nicht leer sein")
 
 	// If there are any errors, redisplay the stay create form with a 422 status code.
 	if !form.Valid() {
@@ -879,7 +879,7 @@ func (app *application) userSignupPost(w http.ResponseWriter, r *http.Request) {
 
 	// Otherwise add a confirmation flash message to the session confirming that
 	// their signup worked.
-	app.sessionManager.Put(r.Context(), "flash", "Your signup was successful. Please log in.")
+	app.sessionManager.Put(r.Context(), "flash", "Registrierung erfolgreich. Bitte einloggen.")
 
 	// And redirect the user to the login page.
 	http.Redirect(w, r, "/user/login", http.StatusSeeOther)
@@ -942,7 +942,7 @@ func (app *application) userLoginPost(w http.ResponseWriter, r *http.Request) {
 	id, err := app.users.Authenticate(form.Email, form.Password)
 	if err != nil {
 		if errors.Is(err, models.ErrInvalidCredentials) {
-			form.AddNonFieldError("Email or password is incorrect")
+			form.AddNonFieldError("Email oder Passwort ist nicht korrekt")
 
 			data := app.newTemplateData(r)
 			data.Form = form
@@ -1131,7 +1131,7 @@ func (app *application) accountPasswordUpdatePost(w http.ResponseWriter, r *http
 	err = app.users.PasswordUpdate(userID, form.CurrentPassword, form.NewPassword)
 	if err != nil {
 		if errors.Is(err, models.ErrInvalidCredentials) {
-			form.AddFieldError("currentPassword", "Current password is incorrect")
+			form.AddFieldError("currentPassword", "Aktuelles Passwort is nicht korrekt")
 
 			data := app.newTemplateData(r)
 			data.Form = form
@@ -1143,7 +1143,7 @@ func (app *application) accountPasswordUpdatePost(w http.ResponseWriter, r *http
 		return
 	}
 
-	app.sessionManager.Put(r.Context(), "flash", "Your password has been updated!")
+	app.sessionManager.Put(r.Context(), "flash", "Passwort wurde geaendert.")
 
 	http.Redirect(w, r, "/account/view", http.StatusSeeOther)
 }
@@ -1196,7 +1196,7 @@ func (app *application) userPasswordResetPost(w http.ResponseWriter, r *http.Req
 	err = app.users.ResetPassword(id, form.NewPassword)
 	if err != nil {
 		if errors.Is(err, models.ErrInvalidCredentials) {
-			form.AddFieldError("currentPassword", "Current password is incorrect")
+			form.AddFieldError("currentPassword", "Aktuelles Passwort ist nicht korrekt")
 			data := app.newTemplateData(r)
 			data.Form = form
 			app.render(w, r, http.StatusUnprocessableEntity, "password.tmpl", data)
@@ -1205,7 +1205,7 @@ func (app *application) userPasswordResetPost(w http.ResponseWriter, r *http.Req
 		}
 		return
 	}
-	app.sessionManager.Put(r.Context(), "flash", "The password has been reset!")
+	app.sessionManager.Put(r.Context(), "flash", "Passwort wurde zurueckgesetzt!")
 
 	http.Redirect(w, r, "/users", http.StatusSeeOther)
 }
